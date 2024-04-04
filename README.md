@@ -4,3 +4,7 @@ Am creat acest proiect pentru a permite utilizatorilor sa converteasca sume de b
 
 Aplicatia foloseste date externe de la FloatRates pentru a obtine cele mai recente rate de schimb valutar, asigurand astfel ca informatiile sunt mereu la zi:
 https://www.floatrates.com/daily/usd.json
+<br><br>
+<p align="center">
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/Interface.png">
+</p>
