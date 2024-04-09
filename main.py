@@ -2,6 +2,7 @@ import requests
 import tkinter as tk
 from tkinter import ttk
 
+
 class CurrencyConverter:
     def __init__(self):
         self.exchange_rates = {}
@@ -27,6 +28,12 @@ class CurrencyConverter:
         from_currency = from_currency.upper()
         to_currency = to_currency.upper()
 
+        if not isinstance(amount, (int, float)):
+            raise ValueError("Valoarea trebuie sa fie in tip numerar.")
+
+        if amount < 0:
+            raise ValueError("Valoarea trebuie sa fie pozitiva.")
+
         if from_currency not in self.exchange_rates:
             raise ValueError("Moneda initiala nu este suportata.")
 
@@ -42,8 +49,8 @@ class CurrencyConverter:
 
 
 class ConverterGUI:
-    def __init__(self, converter):
-        self.converter = converter
+    def __init__(self):
+        self.converter = CurrencyConverter()
 
         self.window = tk.Tk()
         self.window.title("Convertor Valutar")
@@ -67,7 +74,7 @@ class ConverterGUI:
         self.to_currency_combo.grid(column=1, row=2, sticky='ew', padx=5, pady=5)
         self.to_currency_combo.current(1)
 
-        self.convert_button = ttk.Button(self.main_frame, text="Convert", command=self.performConversion)
+        self.convert_button = ttk.Button(self.main_frame, text="Convert", command=self.perform_conversion)
         self.convert_button.grid(column=0, row=3, columnspan=2, sticky='ew', padx=5, pady=5)
 
         ttk.Label(self.main_frame, text="Rezultat:").grid(column=0, row=4, sticky='w')
@@ -78,7 +85,7 @@ class ConverterGUI:
 
         self.window.mainloop()
 
-    def performConversion(self):
+    def perform_conversion(self):
         amount = self.amount_entry.get()
         from_currency = self.from_currency_combo.get()
         to_currency = self.to_currency_combo.get()
@@ -90,6 +97,5 @@ class ConverterGUI:
             self.result_display.config(text="Eroare la conversie")
 
 
-
-converter = CurrencyConverter()
-app = ConverterGUI(converter)
+if __name__ == '__main__':
+    app = ConverterGUI()
