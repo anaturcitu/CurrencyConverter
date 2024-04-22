@@ -1,12 +1,23 @@
 import requests
 import tkinter as tk
 from tkinter import ttk
+import json
 
 
 class CurrencyConverter:
     def __init__(self):
         self.exchange_rates = {}
         self.update_exchange_rates()
+
+
+    def load_exchange_rates(self):
+        try:
+            # incarcam datele din fisierul text
+            with open('exchange_rates.txt', 'r') as file:
+                self.exchange_rates = json.load(file)
+        except FileNotFoundError:
+            print("Nu există un fișier cu ratele de schimb.")
+
 
     def update_exchange_rates(self):
         # URL-ul pentru ratele de schimb valutar pentru USD
@@ -21,8 +32,14 @@ class CurrencyConverter:
             for code, data in rates.items():
                 self.exchange_rates[code.upper()] = data['rate']
 
+            # Salvăm datele în fișierul text
+            with open('exchange_rates.txt', 'w') as file:
+                json.dump(self.exchange_rates, file)
+
+
         except Exception as e:
             print(f"Eroare la actualizarea ratelor de schimb: {e}")
+            self.load_exchange_rates()
 
     def convert(self, amount, from_currency, to_currency):
         from_currency = from_currency.upper()
