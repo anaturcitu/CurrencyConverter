@@ -21,7 +21,10 @@ class TestCurrencyConverter(unittest.TestCase):
         self.assertAlmostEqual(self.converter.convert(1, 'EUR', 'USD'), 1 / 0.93)
 
     def test_unknown_currency(self):
-        self.assertRaises(ValueError, self.converter.convert, 1, 'USD', 'XXX')
+        self.assertRaises(ValueError, self.converter.convert, 1, 'USD', '___')
+
+    def test_unknown_currency2(self):
+        self.assertRaises(ValueError, self.converter.convert, 1, '___', 'USD')
 
     def test_invalid_amount(self):
         self.assertRaises(ValueError, self.converter.convert, 'invalid', 'USD', 'EUR')
@@ -66,6 +69,3 @@ class TestCurrencyConverter(unittest.TestCase):
     def test_extreme_values(self):
         self.converter.exchange_rates['JPY'] = 110.5
         self.assertAlmostEqual(self.converter.convert(1000000000, 'USD', 'JPY'), 110500000000)
-
-if __name__ == '__main__':
-    unittest.main()
