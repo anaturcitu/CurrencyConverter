@@ -10,10 +10,10 @@ class CurrencyConverter:
     def load_exchange_rates(self):
         try:
             # incarcam datele din fisierul text
-            with open('exchange_rates.txt', 'r') as file:
+            with open('../exchange_rates.txt', 'r') as file:
                 self.exchange_rates = json.load(file)
         except FileNotFoundError:
-            print("Nu există un fișier cu ratele de schimb.")
+            print("Nu exista un fisier cu ratele de schimb.")
 
     def update_exchange_rates(self):
         # URL-ul pentru ratele de schimb valutar pentru USD
@@ -29,7 +29,7 @@ class CurrencyConverter:
                 self.exchange_rates[code.upper()] = data['rate']
 
             # Salvam datele in fisierul text
-            with open('exchange_rates.txt', 'w') as file:
+            with open('../exchange_rates.txt', 'w') as file:
                 json.dump(self.exchange_rates, file)
 
         except Exception as e:

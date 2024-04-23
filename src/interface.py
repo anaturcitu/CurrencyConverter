@@ -1,4 +1,4 @@
-from main import CurrencyConverter
+from src.main import CurrencyConverter
 import tkinter as tk
 from tkinter import ttk
 
