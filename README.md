@@ -26,7 +26,7 @@ La dupa adaugarea altor teste suplimentare, clasa are o acoperire de 100%.
 
 Dupa ce am asigurat faptul ca am acoperit 100% din clasa implementata, am trecut la testarea prin mutatii. In acest pas am decis sa folosim <a href="https://mutmut.readthedocs.io/en/latest/" target="_blank">mutmut</a>.
 
-Prima rulare a mutatiei ne ofera 22 de mutanti distrusi, cu 84 care au supravetuit.
+Prima rulare a mutatiei ne ofera 22 de mutanti distrusi, cu 11 care au supravetuit.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/beforeMutants.png">
 
