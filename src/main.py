@@ -52,7 +52,7 @@ class CurrencyConverter:
         if to_currency not in self.exchange_rates:
             raise ValueError("Moneda finala nu este suportata.")
 
-        # convertim suma în USD daca moneda sursa nu este USD
+        # convertim suma in USD daca moneda sursa nu este USD
         if from_currency != 'USD':
             amount = amount / self.exchange_rates[from_currency]
 

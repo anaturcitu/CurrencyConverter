@@ -1,5 +1,4 @@
 import unittest
-import json
 from unittest.mock import patch, mock_open
 from src.main import CurrencyConverter
 
@@ -53,7 +52,9 @@ class TestCurrencyConverter(unittest.TestCase):
     @patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
     def test_load_exchange_rates_from_file(cls, mock_file):
         cls.converter.load_exchange_rates()
+        mock_file.assert_called_with('../exchange_rates.txt','r')  # Verificam daca fisierul a fost deschis corect
         cls.assertIn('EUR', cls.converter.exchange_rates)
+        cls.assertEqual(cls.converter.exchange_rates['EUR'], 0.93)
 
     def test_file_writing(cls):
         with patch('builtins.open', mock_open()) as mock_file:
