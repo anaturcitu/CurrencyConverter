@@ -30,6 +30,39 @@ Prima rulare a mutatiei ne ofera 22 de mutanti distrusi, cu 11 care au supravetu
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/beforeMutants.png">
 
+
+Am incercat sa rulam comanda mutmut results, dar nu a functionat si am primit eroare, asa ca am utilizat un program online recomandat de ChatGPT:
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/findMutants.png">
+
+Am analizat mutantii si am decis sa ucidem mutantii 2 si 3, intrucat sunt destul de similari:
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/killedMutants.png">
+
+Pentru a omori cei 2 mutanti am schimband textul:
+
+```python
+@patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
+    def test_load_exchange_rates_from_file(cls, mock_file):
+        cls.converter.load_exchange_rates()
+        cls.assertIn('EUR', cls.converter.exchange_rates)
+```
+
+in textul:
+
+```python
+@patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
+    def test_load_exchange_rates_from_file(cls, mock_file):
+        cls.converter.load_exchange_rates()
+        mock_file.assert_called_with('../exchange_rates.txt','r')  # Verificam daca fisierul a fost deschis corect
+        cls.assertIn('EUR', cls.converter.exchange_rates)
+        cls.assertEqual(cls.converter.exchange_rates['EUR'], 0.93)
+```
+
+Am rulat din nou mutmut run pentru a verifica daca a functionat, iar mutantii au fost ucisi cu succes:
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterMutants.png">
+
 ## Teste:
 <p align="center">
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterTest.jpg">
