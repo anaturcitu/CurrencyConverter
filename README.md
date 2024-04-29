@@ -82,3 +82,6 @@ Am rulat din nou mutmut run pentru a verifica daca a functionat, iar mutantii au
 - [x] ***test_file_writing*** - Verifica comportamentul functiei *update_exchange_rates*
 - [x] ***test_precision*** - Verifica precizia functiei de conversie
 - [x] ***test_extreme_values*** - Verifica comportamentul functiei de conversie atunci cand suma introdusa este una extrema
+
+## CFG
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
