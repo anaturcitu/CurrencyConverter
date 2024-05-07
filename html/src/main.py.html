@@ -1,0 +1,89 @@
+<html><body><h1>src\main.py</h1>Killed 25 out of 33 mutants<h2>Survived</h2>Survived mutation testing. These mutants show holes in your test suite.<h3>Mutant 1</h3><pre>--- src\main.py
++++ src\main.py
+@@ -4,7 +4,7 @@
+ 
+ class CurrencyConverter:
+     def __init__(self):
+-        self.exchange_rates = {}
++        self.exchange_rates = None
+         self.update_exchange_rates()
+ 
+     def load_exchange_rates(self):
+</pre><h3>Mutant 5</h3><pre>--- src\main.py
++++ src\main.py
+@@ -13,7 +13,7 @@
+             with open('../exchange_rates.txt', 'r') as file:
+                 self.exchange_rates = json.load(file)
+         except FileNotFoundError:
+-            print("Nu exista un fisier cu ratele de schimb.")
++            print("XXNu exista un fisier cu ratele de schimb.XX")
+ 
+     def update_exchange_rates(self):
+         # URL-ul pentru ratele de schimb valutar pentru USD
+</pre><h3>Mutant 17</h3><pre>--- src\main.py
++++ src\main.py
+@@ -33,7 +33,7 @@
+                 json.dump(self.exchange_rates, file)
+ 
+         except Exception as e:
+-            print(f"Eroare la actualizarea ratelor de schimb: {e}")
++            print(f"XXEroare la actualizarea ratelor de schimb: {e}XX")
+             self.load_exchange_rates()
+ 
+     def convert(self, amount, from_currency, to_currency):
+</pre><h3>Mutant 21</h3><pre>--- src\main.py
++++ src\main.py
+@@ -41,7 +41,7 @@
+         to_currency = to_currency.upper()
+ 
+         if not isinstance(amount, (int, float)):
+-            raise ValueError("Valoarea trebuie sa fie in tip numerar.")
++            raise ValueError("XXValoarea trebuie sa fie in tip numerar.XX")
+ 
+         if amount < 0:
+             raise ValueError("Valoarea trebuie sa fie pozitiva.")
+</pre><h3>Mutant 24</h3><pre>--- src\main.py
++++ src\main.py
+@@ -44,7 +44,7 @@
+             raise ValueError("Valoarea trebuie sa fie in tip numerar.")
+ 
+         if amount < 0:
+-            raise ValueError("Valoarea trebuie sa fie pozitiva.")
++            raise ValueError("XXValoarea trebuie sa fie pozitiva.XX")
+ 
+         if from_currency not in self.exchange_rates:
+             raise ValueError("Moneda initiala nu este suportata.")
+</pre><h3>Mutant 26</h3><pre>--- src\main.py
++++ src\main.py
+@@ -47,7 +47,7 @@
+             raise ValueError("Valoarea trebuie sa fie pozitiva.")
+ 
+         if from_currency not in self.exchange_rates:
+-            raise ValueError("Moneda initiala nu este suportata.")
++            raise ValueError("XXMoneda initiala nu este suportata.XX")
+ 
+         if to_currency not in self.exchange_rates:
+             raise ValueError("Moneda finala nu este suportata.")
+</pre><h3>Mutant 28</h3><pre>--- src\main.py
++++ src\main.py
+@@ -50,7 +50,7 @@
+             raise ValueError("Moneda initiala nu este suportata.")
+ 
+         if to_currency not in self.exchange_rates:
+-            raise ValueError("Moneda finala nu este suportata.")
++            raise ValueError("XXMoneda finala nu este suportata.XX")
+ 
+         # convertim suma in USD daca moneda sursa nu este USD
+         if from_currency != 'USD':
+</pre><h3>Mutant 30</h3><pre>--- src\main.py
++++ src\main.py
+@@ -53,7 +53,7 @@
+             raise ValueError("Moneda finala nu este suportata.")
+ 
+         # convertim suma in USD daca moneda sursa nu este USD
+-        if from_currency != 'USD':
++        if from_currency != 'XXUSDXX':
+             amount = amount / self.exchange_rates[from_currency]
+ 
+         # convertim suma din USD în moneda destinatie
+</pre></body></html>

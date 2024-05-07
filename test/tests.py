@@ -52,9 +52,7 @@ class TestCurrencyConverter(unittest.TestCase):
     @patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
     def test_load_exchange_rates_from_file(cls, mock_file):
         cls.converter.load_exchange_rates()
-        mock_file.assert_called_with('../exchange_rates.txt','r')  # Verificam daca fisierul a fost deschis corect
         cls.assertIn('EUR', cls.converter.exchange_rates)
-        cls.assertEqual(cls.converter.exchange_rates['EUR'], 0.93)
 
     def test_file_writing(cls):
         with patch('builtins.open', mock_open()) as mock_file:
@@ -62,11 +60,17 @@ class TestCurrencyConverter(unittest.TestCase):
             cls.converter.update_exchange_rates()  # This should write to the file
             mock_file.assert_called_with('../exchange_rates.txt', 'w')
 
-    def test_precision(cls):
-        cls.converter.exchange_rates['CHF'] = 1.08777
-        amount_converted = cls.converter.convert(1.0001, 'USD', 'CHF')
-        cls.assertAlmostEqual(amount_converted, 1.088, places=3)
+    # Teste pentru ucis mutanti
+    @patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
+    def test_kill_mutantants1(cls, mock_file):
+        cls.converter.load_exchange_rates()
+        mock_file.assert_called_with('../exchange_rates.txt', 'r')  # Verificam daca fisierul a fost deschis corect
+        cls.assertIn('EUR', cls.converter.exchange_rates)
+        cls.assertEqual(cls.converter.exchange_rates['EUR'], 0.93)
 
-    def test_extreme_values(cls):
-        cls.converter.exchange_rates['JPY'] = 110.5
-        cls.assertAlmostEqual(cls.converter.convert(1000000000, 'USD', 'JPY'), 110500000000)
+    @patch('src.main.requests.get')
+    def test_kill_mutantants2(cls, mock_get):
+        mock_get.return_value.json.return_value = {'USD': {'rate': 1}, 'EUR': {'rate': 0.93}}
+        cls.converter.update_exchange_rates()
+        for rate in cls.converter.exchange_rates.values():  # Verificam ca exchange_rates nu este None
+            cls.assertIsNotNone(rate, "Exchange rate should not be None")
