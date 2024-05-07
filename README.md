@@ -14,13 +14,13 @@ Dupa implementarea initiala a primelor teste, aveam o acoperire a clasei de 77%,
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/beforeCoverage.jpg">
 
-Pentru generarea testelor cu API si citirea din fisier, am utilizat tool-ul AI ChatGPT.
+Testele care nu au fost acoperite au fost cele pentru citirea din fisier si a API-ului. Pentru generareaacestor am utilizat tool-ul AI ChatGPT, testele furnizate de el au avut mici erori, dar dupa rezolvarea lor au reusit sa treaca fara nici o problema.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/ai_test_generate.png">
 
-La dupa adaugarea altor teste suplimentare, clasa are o acoperire de 100%.
+Dupa adaugarea acestor teste suplimentare, clasa are o acoperire de 100%.
 
-<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterCoverage.jpg">
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterCoverage.png">
 
 ## Testare prin mutatii
 
@@ -31,45 +31,48 @@ Prima rulare a mutatiei ne ofera 22 de mutanti distrusi, cu 11 care au supravetu
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/beforeMutants.png">
 
 
-Am incercat sa rulam comanda mutmut results, dar nu a functionat si am primit eroare, asa ca am utilizat un program online recomandat de ChatGPT:
+Am generat pagina HTML pentru vizualizare a mutantilor si observam ca programul a reusit sa omoare 66.67% dintre mutanti si cu ajutorul paginii am analizat mutantii.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/findMutants.png">
 
-Am analizat mutantii si am decis sa ucidem mutantii 2 si 3, intrucat sunt destul de similari:
+Am decis sa ucidem mutantii 2 si 3, intrucat sunt destul de similari:
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/killedMutants.png">
 
-Pentru a omori cei 2 mutanti am schimband textul:
+Pentru a omori cei 2 mutanti trebuie sa ne asiguram ca fisierul text este deschis corespunzator.
 
 ```python
-@patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
-    def test_load_exchange_rates_from_file(cls, mock_file):
+    @patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
+    def test_kill_mutantants1(cls, mock_file):
         cls.converter.load_exchange_rates()
-        cls.assertIn('EUR', cls.converter.exchange_rates)
-```
-
-in textul:
-
-```python
-@patch('builtins.open', new_callable=mock_open, read_data='{"USD": 1, "EUR": 0.93}')
-    def test_load_exchange_rates_from_file(cls, mock_file):
-        cls.converter.load_exchange_rates()
-        mock_file.assert_called_with('../exchange_rates.txt','r')  # Verificam daca fisierul a fost deschis corect
+        mock_file.assert_called_with('../exchange_rates.txt', 'r')  # Verificam daca fisierul a fost deschis corect
         cls.assertIn('EUR', cls.converter.exchange_rates)
         cls.assertEqual(cls.converter.exchange_rates['EUR'], 0.93)
 ```
 
-Am rulat din nou mutmut run pentru a verifica daca a functionat, iar mutantii au fost ucisi cu succes:
+Am omorat de asemenea si mutantul numarul 14 care se poate ucide verificand ca valorile din exchange_rates sa nu fie de tip None
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/killedMutants2.png">
+
+```python
+    def test_kill_mutantants2(cls, mock_get):
+        mock_get.return_value.json.return_value = {'USD': {'rate': 1}, 'EUR': {'rate': 0.93}}
+        cls.converter.update_exchange_rates()
+        for rate in cls.converter.exchange_rates.values():  # Verificam ca exchange_rates nu este None
+            cls.assertIsNotNone(rate, "Exchange rate should not be None")
+```
+
+Am rulat din nou *mutmut run* pentru a verifica daca a functionat, iar mutantii au fost ucisi cu succes:
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterMutants.png">
 
+Prin comanda *mutmut results* putem confirma faptul ca mutantii ucisi au fost 2, 3 si 14.
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterMutantsResult.png">
+
 ## Teste:
-<p align="center">
-<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterTest.jpg">
-</p>
 
 - [x] ***test_same_currency()*** - Verifica daca conversia intre aceeasi moneda returneaza suma initiala
-- [x] ***test_different_rate()** - Verifica daca conversia intre doua monede cu rate de schimb diferite este calculata corect
+- [x] ***test_different_rate()*** - Verifica daca conversia intre doua monede cu rate de schimb diferite este calculata corect
 - [x] ***test_inverse_rate()*** - Verifica daca conversia inversa intre doua monede cu rate de schimb diferite este calculata corect
 - [x] ***test_unknown_currency()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda finala necunoscuta 
 - [x] ***test_unknown_currency2()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda initiala necunoscuta
@@ -80,8 +83,11 @@ Am rulat din nou mutmut run pentru a verifica daca a functionat, iar mutantii au
 - [x] ***test_api_failure_with_backup_file*** - Verifica comportamentul clasei in cazul in care nu poate accesa api-ul
 - [x] ***test_load_exchange_rates_from_file*** - Verfica comportamenul functiei *load_exchange_rates*
 - [x] ***test_file_writing*** - Verifica comportamentul functiei *update_exchange_rates*
-- [x] ***test_precision*** - Verifica precizia functiei de conversie
-- [x] ***test_extreme_values*** - Verifica comportamentul functiei de conversie atunci cand suma introdusa este una extrema
+- [x] ***test_kill_mutantants1*** - Teste pentru ucis mutanti
+- [x] ***test_kill_mutantants2*** - Teste pentru ucis mutanti
+
 
 ## CFG
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
+
+
