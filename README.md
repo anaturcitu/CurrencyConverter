@@ -67,7 +67,12 @@ Am rulat din nou *mutmut run* pentru a verifica daca a functionat, iar mutantii 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterMutants.png">
 
 Prin comanda *mutmut results* putem confirma faptul ca mutantii ucisi au fost 2, 3 si 14.
+
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterMutantsResult.png">
+
+Am generat HTML-ul pentru coverage si observam ca avem o acoperire de 100%.
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterCoverageMutants.png">
 
 ## Teste:
 
@@ -88,6 +93,9 @@ Prin comanda *mutmut results* putem confirma faptul ca mutantii ucisi au fost 2,
 
 
 ## CFG
+
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
+
+
 
 
