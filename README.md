@@ -96,6 +96,11 @@ Am generat HTML-ul pentru coverage si observam ca avem o acoperire de 100%.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
 
+Pe baza grafului am realizat *Acoperirea la nivel de instructiune*.
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg_a.png">
+
+Din acest tabel rezulta faptul ca numarul minim de teste pentru acoperire la aceasta functie este 6. 
 
 
 
