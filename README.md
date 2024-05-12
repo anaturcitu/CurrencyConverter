@@ -9,6 +9,40 @@ https://www.floatrates.com/daily/usd.json. In cazul in care aplicatia nu poate a
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/Interface.png">
 </p>
 
+## Teste:
+
+### Teste Functionale
+- [x] ***test_same_currency()*** - Verifica daca conversia intre aceeasi moneda returneaza suma originala, conform specificatiei de baza
+- [x] ***test_different_rate()*** - Verifica daca conversia din USD in EUR foloseste rata de schimb corecta, asigurandu-se ca operatiunea de conversie este simetrica si precisa
+- [x] ***test_inverse_rate()*** - Verifica daca conversia din EUR in USD este calculata corect, asigurandu-se ca operatiunea de conversie este simetrica si precisa
+- [x] ***test_zero_amount()*** - Verifica comportamentul functiei atunci cand suma introdusa pentru conversie este zero
+
+### Teste Structurale
+- [x] ***test_unknown_currency()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda finala necunoscuta 
+- [x] ***test_unknown_currency2()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda initiala necunoscuta
+- [x] ***test_invalid_amount()*** - Verifica comportamentul functiei in cazul in care suma introdusa pentru conversie nu este un input valid
+- [x] ***test_negative_amount()*** - Verifica comportamentul functiei atunci cand suma introdusa pentru conversie este negativa, asigurand ca sistemul respinge sumele negative
+- [x] ***test_api_success*** - Simuleaza un raspuns pozitiv de la API-ul de rate de schimb si verifica actualizarea corecta a datelor. 
+- [x] ***test_api_failure_with_backup_file*** - Testeaza robustetea sistemului in fata unei erori de API, verificand utilizarea unui fisier de backup pentru incarcarea ratelor de schimb.
+- [x] ***test_load_exchange_rates_from_file*** - Verifica incarcarea corecta a ratelor de schimb dintr-un fisier local.
+- [x] ***test_file_writing*** - Testeaza scrierea in fisierul de rate de schimb, verificând ca datele sunt salvate corect. 
+
+### Teste Mutanti
+- [x] ***test_kill_mutantants1*** - Teste pentru ucis mutanti
+- [x] ***test_kill_mutantants2*** - Teste pentru ucis mutanti
+
+
+## CFG
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
+
+Pe baza grafului am realizat *Acoperirea la nivel de instructiune*.
+
+<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg_a.png">
+
+Noi am implement 8 functii de testare pentru aceasta functie. Din acest tabel rezulta faptul ca numarul minim de teste pentru acoperire este 6. 
+
+
 ## Dezvoltare
 Dupa implementarea initiala a primelor teste, aveam o acoperire a clasei de 77%, verificata prin <a href="https://coverage.readthedocs.io/en/7.4.4/" target="_blank">coverage.py</a>.
 
@@ -73,34 +107,6 @@ Prin comanda *mutmut results* putem confirma faptul ca mutantii ucisi au fost 2,
 Am generat HTML-ul pentru coverage si observam ca avem o acoperire de 100%.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/afterCoverageMutants.png">
-
-## Teste:
-
-- [x] ***test_same_currency()*** - Verifica daca conversia intre aceeasi moneda returneaza suma initiala
-- [x] ***test_different_rate()*** - Verifica daca conversia intre doua monede cu rate de schimb diferite este calculata corect
-- [x] ***test_inverse_rate()*** - Verifica daca conversia inversa intre doua monede cu rate de schimb diferite este calculata corect
-- [x] ***test_unknown_currency()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda finala necunoscuta 
-- [x] ***test_unknown_currency2()*** - Verifica comportamentul functiei in cazul in care este furnizata o moneda initiala necunoscuta
-- [x] ***test_invalid_amount()*** - Verifica comportamentul functiei in cazul in care suma introdusa pentru conversie nu este un input valid
-- [x] ***test_zero_amount()*** - Verifica comportamentul functiei atunci cand suma introdusa pentru conversie este zero
-- [x] ***test_negative_amount()*** - Verifica comportamentul functiei atunci cand suma introdusa pentru conversie este negativa
-- [x] ***test_api_success*** - Verifica daca functia poate accesa cu succes api-ul
-- [x] ***test_api_failure_with_backup_file*** - Verifica comportamentul clasei in cazul in care nu poate accesa api-ul
-- [x] ***test_load_exchange_rates_from_file*** - Verfica comportamenul functiei *load_exchange_rates*
-- [x] ***test_file_writing*** - Verifica comportamentul functiei *update_exchange_rates*
-- [x] ***test_kill_mutantants1*** - Teste pentru ucis mutanti
-- [x] ***test_kill_mutantants2*** - Teste pentru ucis mutanti
-
-
-## CFG
-
-<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg.png">
-
-Pe baza grafului am realizat *Acoperirea la nivel de instructiune*.
-
-<img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/cfg_a.png">
-
-Din acest tabel rezulta faptul ca numarul minim de teste pentru acoperire la aceasta functie este 6. 
 
 
 
