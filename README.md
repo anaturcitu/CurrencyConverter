@@ -48,7 +48,7 @@ Dupa implementarea initiala a primelor teste, aveam o acoperire a clasei de 77%,
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/beforeCoverage.jpg">
 
-Testele care nu au fost acoperite au fost cele pentru citirea din fisier si a API-ului. Pentru generareaacestor am utilizat tool-ul AI ChatGPT, testele furnizate de el au avut mici erori, dar dupa rezolvarea lor au reusit sa treaca fara nici o problema.
+Testele care nu au fost acoperite au fost cele pentru citirea din fisier si a API-ului. Pentru generarea acestor am utilizat tool-ul AI ChatGPT, testele furnizate de el au avut mici erori, dar dupa rezolvarea lor au reusit sa treaca fara nici o problema.
 
 <img  src="https://github.com/anaturcitu/CurrencyConverter/blob/main/images/ai_test_generate.png">
 
